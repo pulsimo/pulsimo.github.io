@@ -194,6 +194,49 @@ sudo docker compose version`}</pre>
         </div>
       </div>
 
+      {/* Quick Install */}
+      <h2>Quick Installation with Docker Compose</h2>
+      <p>The fastest way to get Pulsimo running:</p>
+
+      <div className="not-prose my-6">
+        <div className="bg-slate-900 dark:bg-black rounded-lg p-6">
+          <div className="font-mono text-sm space-y-4">
+            <div>
+              <div className="text-slate-500 mb-1"># Clone the repository</div>
+              <div className="text-cyan-400">git clone https://github.com/Cloud-Council/pulsimo.git</div>
+              <div className="text-cyan-400">cd pulsimo</div>
+            </div>
+            <div>
+              <div className="text-slate-500 mb-1"># Copy environment template</div>
+              <div className="text-cyan-400">cp .env.example .env</div>
+            </div>
+            <div>
+              <div className="text-slate-500 mb-1"># Edit environment variables (optional)</div>
+              <div className="text-cyan-400">nano .env</div>
+            </div>
+            <div>
+              <div className="text-slate-500 mb-1"># Start all services</div>
+              <div className="text-cyan-400">docker compose up -d --remove-orphans</div>
+            </div>
+            <div>
+              <div className="text-slate-500 mb-1"># View logs</div>
+              <div className="text-cyan-400">docker compose logs -f</div>
+            </div>
+            <div>
+              <div className="text-slate-500 mb-1"># Access Pulsimo</div>
+              <div className="text-green-400">open http://localhost:3000</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="not-prose p-4 rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 my-6">
+        <p className="text-sm text-green-900 dark:text-green-100 flex items-start gap-2 m-0">
+          <CheckCircle2 className="w-5 h-5 flex-shrink-0 mt-0.5" />
+          <span><strong>Success!</strong> Pulsimo should now be running on http://localhost:3000. Default credentials will be created on first run.</span>
+        </p>
+      </div>
+
       {/* Environment Configuration */}
       <h2>Environment Configuration</h2>
       <p>Configure Pulsimo by editing the <code>.env</code> file. Here are the essential variables you need to set:</p>
@@ -286,49 +329,6 @@ FROM_EMAIL=alerts@domain.com`}</pre>
             Environment Variables Guide
           </a>
           .
-        </p>
-      </div>
-
-      {/* Quick Install */}
-      <h2>Quick Installation with Docker Compose</h2>
-      <p>The fastest way to get Pulsimo running:</p>
-
-      <div className="not-prose my-6">
-        <div className="bg-slate-900 dark:bg-black rounded-lg p-6">
-          <div className="font-mono text-sm space-y-4">
-            <div>
-              <div className="text-slate-500 mb-1"># Clone the repository</div>
-              <div className="text-cyan-400">git clone https://github.com/Cloud-Council/pulsimo.git</div>
-              <div className="text-cyan-400">cd pulsimo</div>
-            </div>
-            <div>
-              <div className="text-slate-500 mb-1"># Copy environment template</div>
-              <div className="text-cyan-400">cp .env.example .env</div>
-            </div>
-            <div>
-              <div className="text-slate-500 mb-1"># Edit environment variables (optional)</div>
-              <div className="text-cyan-400">nano .env</div>
-            </div>
-            <div>
-              <div className="text-slate-500 mb-1"># Start all services</div>
-              <div className="text-cyan-400">docker compose up -d --remove-orphans</div>
-            </div>
-            <div>
-              <div className="text-slate-500 mb-1"># View logs</div>
-              <div className="text-cyan-400">docker compose logs -f</div>
-            </div>
-            <div>
-              <div className="text-slate-500 mb-1"># Access Pulsimo</div>
-              <div className="text-green-400">open http://localhost:3000</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="not-prose p-4 rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 my-6">
-        <p className="text-sm text-green-900 dark:text-green-100 flex items-start gap-2 m-0">
-          <CheckCircle2 className="w-5 h-5 flex-shrink-0 mt-0.5" />
-          <span><strong>Success!</strong> Pulsimo should now be running on http://localhost:3000. Default credentials will be created on first run.</span>
         </p>
       </div>
 
