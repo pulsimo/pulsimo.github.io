@@ -11,56 +11,56 @@ const dashboardImages = [
     id: 1,
     title: 'Service Dashboard',
     description: 'Monitor all your services in real-time with comprehensive project tracking',
-    image: '/images/placeholder.svg',
+    image: '/images/dashboard-1.png',
     alt: 'Pulsimo Service Dashboard - Real-time service monitoring'
   },
   {
     id: 2,
     title: 'Service Performance Analytics',
     description: 'Comprehensive performance analysis with detailed metrics and uptime tracking',
-    image: '/images/placeholder.svg',
+    image: '/images/dashboard-2.png',
     alt: 'Service Performance Dashboard - Analytics and metrics'
   },
   {
     id: 3,
     title: 'Notification Channels',
     description: 'Configure multi-channel alerts for your monitoring system',
-    image: '/images/placeholder.svg',
+    image: '/images/dashboard-3.png',
     alt: 'Notification Channels - Alert management'
   },
   {
     id: 4,
     title: 'System Health Monitoring',
     description: 'Real-time monitoring of all registered services with health indicators',
-    image: '/images/placeholder.svg',
+    image: '/images/dashboard-4.png',
     alt: 'System Health - Service status and uptime'
   },
   {
     id: 5,
     title: 'Database Health',
     description: 'Monitor maintenance schedules and database performance',
-    image: '/images/placeholder.svg',
+    image: '/images/dashboard-5.png',
     alt: 'Database Health - Performance and maintenance'
   },
   {
     id: 6,
     title: 'Event Trail',
     description: 'Track all user actions and system events in real-time',
-    image: '/images/placeholder.svg',
+    image: '/images/dashboard-6.png',
     alt: 'Event Trail - Activity logging and tracking'
   },
   {
     id: 7,
     title: 'Incident Management',
     description: 'Track and resolve service failures with comprehensive incident tracking',
-    image: '/images/placeholder.svg',
+    image: '/images/dashboard-7.png',
     alt: 'Incident Management - Service failure tracking and resolution'
   },
   {
     id: 8,
     title: 'Service Dependencies',
     description: 'Visualize and analyze service dependencies and their impact with interactive graphs',
-    image: '/images/placeholder.svg',
+    image: '/images/dashboard-8.png',
     alt: 'Service Dependencies - Dependency graph and impact analysis'
   },
 ]
