@@ -2,7 +2,7 @@
 
 import Navigation from '@/components/Navigation'
 import ThemeToggle from '@/components/ThemeToggle'
-import { Mail, MessageSquare, Github, Twitter, Linkedin, Send } from 'lucide-react'
+import { Mail, MessageSquare, Github, Twitter, Linkedin, Send, Bug, ExternalLink } from 'lucide-react'
 import { useState } from 'react'
 
 export default function ContactPage() {
@@ -113,6 +113,31 @@ export default function ContactPage() {
                           <Linkedin className="w-5 h-5 text-slate-700 dark:text-slate-300 group-hover:text-cyan-600 dark:group-hover:text-cyan-400" />
                         </a>
                       </div>
+                    </div>
+
+                    {/* Bug Report */}
+                    <div className="p-6 rounded-lg bg-gradient-to-br from-red-50 to-orange-50 dark:from-red-900/10 dark:to-orange-900/10 border-2 border-red-300 dark:border-red-800">
+                      <div className="flex items-center gap-3 mb-3">
+                        <div className="p-2 rounded-lg bg-gradient-to-br from-red-500 to-orange-500">
+                          <Bug className="w-5 h-5 text-white" />
+                        </div>
+                        <h3 className="font-bold text-slate-800 dark:text-white">
+                          Found a Bug?
+                        </h3>
+                      </div>
+                      <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
+                        Help us improve Pulsimo by reporting any bugs or issues you encounter.
+                      </p>
+                      <a
+                        href="https://docs.google.com/forms/d/e/1FAIpQLSc3ZuyIwqytCaw7NNatE79mkhB6DzbwMYq29fEIRC17bfO8vA/viewform?usp=publish-editor"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-red-500 to-orange-500 text-white font-medium hover:from-red-600 hover:to-orange-600 transition-all shadow-md hover:shadow-lg group"
+                      >
+                        <Bug className="w-4 h-4" />
+                        <span>Report Bug</span>
+                        <ExternalLink className="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                      </a>
                     </div>
 
                     {/* Response Time */}
