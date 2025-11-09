@@ -63,13 +63,13 @@ export default function AboutDevPage() {
                   
                   {/* Social Links */}
                   <div className="flex gap-4">
-                    <a href="mailto:kader@example.com" className="p-3 rounded-full bg-cyan-100 dark:bg-cyan-900/30 hover:bg-cyan-200 dark:hover:bg-cyan-900/50 transition-colors">
+                    <a href="mailto:kader.devops@gmail.com" className="p-3 rounded-full bg-cyan-100 dark:bg-cyan-900/30 hover:bg-cyan-200 dark:hover:bg-cyan-900/50 transition-colors">
                       <Mail className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />
                     </a>
-                    <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="p-3 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+                    <a href="https://github.com/onedord1" target="_blank" rel="noopener noreferrer" className="p-3 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
                       <Github className="w-5 h-5 text-slate-700 dark:text-slate-300" />
                     </a>
-                    <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="p-3 rounded-full bg-blue-100 dark:bg-blue-900/30 hover:bg-blue-200 dark:hover:bg-blue-900/50 transition-colors">
+                    <a href="https://linkedin.com/in/abir-k" target="_blank" rel="noopener noreferrer" className="p-3 rounded-full bg-blue-100 dark:bg-blue-900/30 hover:bg-blue-200 dark:hover:bg-blue-900/50 transition-colors">
                       <Linkedin className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                     </a>
                   </div>
