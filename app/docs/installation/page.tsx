@@ -335,8 +335,31 @@ FROM_EMAIL=alerts@domain.com`}</pre>
       {/* Post Installation */}
       <h2>Post-Installation Steps</h2>
       
-      <h3>1. Create Admin Account</h3>
-      <p>On first access to http://localhost:3000, you'll be prompted to create an admin account.</p>
+      <h3>1. First Login with Default Credentials</h3>
+      <p>Pulsimo comes with a default system administrator account for on-premise deployments. Use these credentials to login at <code>http://localhost:3000</code>:</p>
+      
+      <div className="not-prose my-4 p-4 rounded-lg bg-amber-50 dark:bg-amber-900/20 border-l-4 border-amber-500">
+        <div className="flex items-start gap-3">
+          <AlertTriangle className="w-5 h-5 text-amber-600 dark:text-amber-400 mt-0.5 flex-shrink-0" />
+          <div>
+            <p className="font-semibold text-amber-900 dark:text-amber-100 mb-2">Default Login Credentials</p>
+            <div className="space-y-2 text-sm">
+              <div className="font-mono bg-white dark:bg-slate-900 p-3 rounded border border-amber-200 dark:border-amber-800">
+                <div className="text-slate-600 dark:text-slate-400 mb-1">Email:</div>
+                <div className="text-slate-900 dark:text-white font-semibold">superadmin@pulsimo.io</div>
+              </div>
+              <div className="font-mono bg-white dark:bg-slate-900 p-3 rounded border border-amber-200 dark:border-amber-800">
+                <div className="text-slate-600 dark:text-slate-400 mb-1">Password:</div>
+                <div className="text-slate-900 dark:text-white font-semibold">admin</div>
+              </div>
+            </div>
+            <p className="text-amber-800 dark:text-amber-200 mt-3 font-medium">
+              ⚠️ <strong>IMPORTANT:</strong> Change this password immediately after your first login for security reasons. 
+              The superadmin account is immutable and cannot be deleted.
+            </p>
+          </div>
+        </div>
+      </div>
 
       <h3>2. Verify Services</h3>
       <p>Check that all containers are running:</p>
@@ -351,6 +374,30 @@ FROM_EMAIL=alerts@domain.com`}</pre>
         <li><strong>Frontend:</strong> http://localhost:3000</li>
         <li><strong>API:</strong> http://localhost:8080</li>
       </ul>
+
+      <h3>4. Change Default Password (Critical)</h3>
+      <p>For security, immediately change the default password after logging in:</p>
+      <ol className="space-y-2">
+        <li>Login with the default credentials shown above</li>
+        <li>Navigate to <strong>Users</strong> page from the dashboard</li>
+        <li>Find the <code>superadmin@pulsimo.io</code> user (marked with a "System" badge)</li>
+        <li>Click the <strong>key icon</strong> (🔑) to change the password</li>
+        <li>Set a strong password and save</li>
+      </ol>
+      
+      <div className="not-prose my-4 p-4 rounded-lg bg-red-50 dark:bg-red-900/20 border-l-4 border-red-500">
+        <div className="flex items-start gap-3">
+          <AlertTriangle className="w-5 h-5 text-red-600 dark:text-red-400 mt-0.5 flex-shrink-0" />
+          <div>
+            <p className="font-semibold text-red-900 dark:text-red-100 mb-1">Security Note</p>
+            <p className="text-sm text-red-800 dark:text-red-200 m-0">
+              The superadmin account is <strong>immutable</strong> and cannot be deleted. 
+              It's protected at the database level to ensure you always have administrative access. 
+              While you can change the password, the email and role cannot be modified.
+            </p>
+          </div>
+        </div>
+      </div>
 
       {/* Troubleshooting */}
       <h2>Troubleshooting</h2>
