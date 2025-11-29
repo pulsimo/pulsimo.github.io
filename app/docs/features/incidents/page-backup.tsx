@@ -1,9 +1,9 @@
 import { Metadata } from 'next'
-import { AlertCircle, CheckCircle2, Clock, Users, FileText, TrendingUp, Bell, XCircle, AlertTriangle, Zap, Link2, GitBranch, Activity, Target, BarChart3, MessageSquare, Shield } from 'lucide-react'
+import { AlertCircle, CheckCircle2, Clock, Users, FileText, TrendingUp, Bell, XCircle } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'Incident Management System - Pulsimo Documentation',
-  description: 'Complete incident lifecycle management with linking, root cause analysis, and team collaboration',
+  title: 'Incident Management - Pulsimo Documentation',
+  description: 'Complete incident lifecycle management with acknowledgement, investigation, and post-mortem generation',
 }
 
 export default function IncidentsPage() {
@@ -303,243 +303,27 @@ export default function IncidentsPage() {
         </table>
       </div>
 
-      {/* Incident Linking & Relationships */}
-      <h2>Incident Linking & Relationships</h2>
-      <div className="not-prose mb-6 p-5 rounded-xl bg-gradient-to-br from-purple-50 via-pink-50 to-red-50 dark:from-purple-900/20 dark:via-pink-900/20 dark:to-red-900/20 border border-purple-200 dark:border-purple-800">
-        <div className="flex items-center gap-3 mb-3">
-          <Link2 className="w-7 h-7 text-purple-600 dark:text-purple-400" />
-          <h3 className="text-xl font-bold text-slate-900 dark:text-white m-0">Powerful New Feature</h3>
-        </div>
-        <p className="text-slate-700 dark:text-slate-300 m-0">
-          Connect related incidents for better root cause analysis. Pulsimo automatically suggests relationships when it detects patterns.
-        </p>
-      </div>
-
-      <h3>Relationship Types</h3>
-      <div className="not-prose grid md:grid-cols-2 gap-4 my-6">
-        <div className="p-5 rounded-lg bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 border border-blue-200 dark:border-blue-800">
-          <div className="flex items-center gap-2 mb-3">
-            <span className="text-2xl">🔄</span>
-            <h4 className="font-bold text-slate-900 dark:text-white text-base m-0">Duplicate</h4>
-          </div>
-          <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">Same issue reported multiple times</p>
-          <div className="p-3 rounded bg-blue-100 dark:bg-blue-900/30">
-            <p className="text-xs text-blue-900 dark:text-blue-100 m-0">
-              Example: "Website slow" + "App loading slow" = Same database issue
-            </p>
-          </div>
-        </div>
-
-        <div className="p-5 rounded-lg bg-gradient-to-br from-red-50 to-orange-50 dark:from-red-900/20 dark:to-orange-900/20 border border-red-200 dark:border-red-800">
-          <div className="flex items-center gap-2 mb-3">
-            <span className="text-2xl">⬅️</span>
-            <h4 className="font-bold text-slate-900 dark:text-white text-base m-0">Caused By</h4>
-          </div>
-          <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">One incident is the root cause of another</p>
-          <div className="p-3 rounded bg-red-100 dark:bg-red-900/30">
-            <p className="text-xs text-red-900 dark:text-red-100 m-0">
-              Example: Database Down → Backend Degraded → Frontend Errors
-            </p>
-          </div>
-        </div>
-
-        <div className="p-5 rounded-lg bg-gradient-to-br from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 border border-yellow-200 dark:border-yellow-800">
-          <div className="flex items-center gap-2 mb-3">
-            <span className="text-2xl">🚫</span>
-            <h4 className="font-bold text-slate-900 dark:text-white text-base m-0">Blocks</h4>
-          </div>
-          <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">Resolving one requires fixing another first</p>
-          <div className="p-3 rounded bg-yellow-100 dark:bg-yellow-900/30">
-            <p className="text-xs text-yellow-900 dark:text-yellow-100 m-0">
-              Example: Database Migration Stuck blocks New Feature Deployment
-            </p>
-          </div>
-        </div>
-
-        <div className="p-5 rounded-lg bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border border-purple-200 dark:border-purple-800">
-          <div className="flex items-center gap-2 mb-3">
-            <span className="text-2xl">👨‍👧</span>
-            <h4 className="font-bold text-slate-900 dark:text-white text-base m-0">Parent/Child</h4>
-          </div>
-          <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">Breaking down complex incidents into sub-tasks</p>
-          <div className="p-3 rounded bg-purple-100 dark:bg-purple-900/30">
-            <p className="text-xs text-purple-900 dark:text-purple-100 m-0">
-              Example: System Outage → Database Recovery + Cache Rebuild
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Root Cause Analysis */}
-      <h2>Automatic Root Cause Analysis</h2>
-      <p>Pulsimo analyzes incidents and automatically detects patterns:</p>
-
-      <div className="not-prose grid md:grid-cols-2 gap-4 my-6">
-        <div className="p-5 rounded-lg bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-cyan-900/20 dark:to-blue-900/20 border border-cyan-200 dark:border-cyan-800">
-          <div className="flex items-center gap-2 mb-3">
-            <Activity className="w-6 h-6 text-cyan-600 dark:text-cyan-400" />
-            <h4 className="font-bold text-slate-900 dark:text-white text-base m-0">Cascade Failures</h4>
-          </div>
-          <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">Detects dependency chain failures</p>
-          <ul className="text-xs text-slate-600 dark:text-slate-400 space-y-1 m-0 list-none pl-0">
-            <li>• Visual graph showing cascade path</li>
-            <li>• Timeline of impact spread</li>
-            <li>• Automatic "caused by" links suggested</li>
-          </ul>
-        </div>
-
-        <div className="p-5 rounded-lg bg-gradient-to-br from-orange-50 to-red-50 dark:from-orange-900/20 dark:to-red-900/20 border border-orange-200 dark:border-orange-800">
-          <div className="flex items-center gap-2 mb-3">
-            <Target className="w-6 h-6 text-orange-600 dark:text-orange-400" />
-            <h4 className="font-bold text-slate-900 dark:text-white text-base m-0">Common Endpoint</h4>
-          </div>
-          <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">Multiple incidents on same service</p>
-          <ul className="text-xs text-slate-600 dark:text-slate-400 space-y-1 m-0 list-none pl-0">
-            <li>• Tracks incident frequency per endpoint</li>
-            <li>• Suggests infrastructure investigation</li>
-            <li>• Identifies problematic services</li>
-          </ul>
-        </div>
-
-        <div className="p-5 rounded-lg bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 border border-green-200 dark:border-green-800">
-          <div className="flex items-center gap-2 mb-3">
-            <Zap className="w-6 h-6 text-green-600 dark:text-green-400" />
-            <h4 className="font-bold text-slate-900 dark:text-white text-base m-0">Deployment Related</h4>
-          </div>
-          <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">Incidents after deployments</p>
-          <ul className="text-xs text-slate-600 dark:text-slate-400 space-y-1 m-0 list-none pl-0">
-            <li>• Correlates incidents with deploys</li>
-            <li>• Suggests rollback if needed</li>
-            <li>• 100% time correlation detection</li>
-          </ul>
-        </div>
-
-        <div className="p-5 rounded-lg bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border border-purple-200 dark:border-purple-800">
-          <div className="flex items-center gap-2 mb-3">
-            <Clock className="w-6 h-6 text-purple-600 dark:text-purple-400" />
-            <h4 className="font-bold text-slate-900 dark:text-white text-base m-0">Time Correlation</h4>
-          </div>
-          <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">Incidents in same time window</p>
-          <ul className="text-xs text-slate-600 dark:text-slate-400 space-y-1 m-0 list-none pl-0">
-            <li>• Detects simultaneous outages</li>
-            <li>• Suggests external factors</li>
-            <li>• Network/infrastructure investigation</li>
-          </ul>
-        </div>
-      </div>
-
-      {/* Response Metrics */}
-      <h2>Response Performance Metrics</h2>
-      <p>Track how well your team responds to incidents:</p>
-
-      <div className="not-prose grid md:grid-cols-2 lg:grid-cols-4 gap-4 my-6">
-        {[
-          { metric: 'Time to Detect', target: '< 5 min', icon: AlertCircle, color: 'red' },
-          { metric: 'Time to Acknowledge', target: '< 15 min', icon: Bell, color: 'yellow' },
-          { metric: 'Time to Identify', target: '< 30 min', icon: Target, color: 'blue' },
-          { metric: 'Time to Resolve', target: '< 2 hours', icon: CheckCircle2, color: 'green' },
-        ].map((item) => (
-          <div key={item.metric} className={`p-4 rounded-lg bg-${item.color}-50 dark:bg-${item.color}-900/20 border border-${item.color}-200 dark:border-${item.color}-800`}>
-            <div className="flex items-center gap-2 mb-2">
-              <item.icon className={`w-5 h-5 text-${item.color}-600 dark:text-${item.color}-400`} />
-              <h4 className="font-semibold text-slate-900 dark:text-white text-xs m-0">{item.metric}</h4>
-            </div>
-            <div className="text-lg font-bold text-slate-900 dark:text-white mb-1">{item.target}</div>
-            <div className="text-xs text-slate-600 dark:text-slate-400">Target</div>
-          </div>
-        ))}
-      </div>
-
-      {/* Communication Timeline */}
-      <h2>Communication Timeline</h2>
-      <p>Every incident has a detailed timeline showing system events and team updates:</p>
-
-      <div className="not-prose my-6 space-y-3">
-        <div className="p-4 rounded-lg bg-slate-50 dark:bg-slate-800/50 border-l-4 border-cyan-500">
-          <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs font-mono text-slate-500 dark:text-slate-400">11:42:15 AM</span>
-            <span className="px-2 py-0.5 rounded text-xs font-semibold bg-cyan-100 dark:bg-cyan-900/40 text-cyan-700 dark:text-cyan-300">System</span>
-          </div>
-          <p className="text-sm text-slate-700 dark:text-slate-300 m-0">Incident created - Backend API health check failed</p>
-        </div>
-
-        <div className="p-4 rounded-lg bg-slate-50 dark:bg-slate-800/50 border-l-4 border-blue-500">
-          <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs font-mono text-slate-500 dark:text-slate-400">11:45:00 AM</span>
-            <span className="px-2 py-0.5 rounded text-xs font-semibold bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300">John</span>
-          </div>
-          <p className="text-sm text-slate-700 dark:text-slate-300 m-0">Checking database logs for connection issues</p>
-        </div>
-
-        <div className="p-4 rounded-lg bg-slate-50 dark:bg-slate-800/50 border-l-4 border-green-500">
-          <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs font-mono text-slate-500 dark:text-slate-400">12:05:45 AM</span>
-            <span className="px-2 py-0.5 rounded text-xs font-semibold bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300">System</span>
-          </div>
-          <p className="text-sm text-slate-700 dark:text-slate-300 m-0">Service recovered - Health check passed</p>
-        </div>
-      </div>
-
       {/* Best Practices */}
       <h2>Best Practices</h2>
-      <div className="not-prose grid md:grid-cols-3 gap-4 my-6">
-        <div className="p-5 rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
-          <h4 className="font-bold text-blue-900 dark:text-blue-100 mb-3">For On-Call Engineers</h4>
-          <ul className="space-y-2 text-sm text-blue-800 dark:text-blue-200 m-0">
-            <li>• Acknowledge immediately</li>
-            <li>• Update timeline every 15 minutes</li>
-            <li>• Link related incidents</li>
-            <li>• Document as you go</li>
-          </ul>
-        </div>
-
-        <div className="p-5 rounded-lg bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800">
-          <h4 className="font-bold text-purple-900 dark:text-purple-100 mb-3">For Team Leads</h4>
-          <ul className="space-y-2 text-sm text-purple-800 dark:text-purple-200 m-0">
-            <li>• Review weekly metrics</li>
-            <li>• Post-mortem critical incidents</li>
-            <li>• Validate automatic links</li>
-            <li>• Update response playbooks</li>
-          </ul>
-        </div>
-
-        <div className="p-5 rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800">
-          <h4 className="font-bold text-green-900 dark:text-green-100 mb-3">For DevOps/SRE</h4>
-          <ul className="space-y-2 text-sm text-green-800 dark:text-green-200 m-0">
-            <li>• Use incident groups for mass outages</li>
-            <li>• Track cascade patterns</li>
-            <li>• Monitor false positive rate</li>
-            <li>• Automate common remediations</li>
-          </ul>
-        </div>
-      </div>
-
-      {/* FAQ */}
-      <h2>Frequently Asked Questions</h2>
       <div className="not-prose space-y-3 my-6">
-        {[
-          {
-            q: 'How do I link incidents together?',
-            a: 'Open the primary incident, click "Link Related" button, select relationship type, choose the related incident, and save.',
-          },
-          {
-            q: 'Can I create incidents manually?',
-            a: 'Yes! Go to Dashboard → Incidents → Create Incident. Fill in title, description, severity, and affected services.',
-          },
-          {
-            q: 'What happens when I acknowledge an incident?',
-            a: 'Repeat alerts stop sending, your name is recorded as the responder, and the team is notified that someone is working on it.',
-          },
-          {
-            q: 'How is MTTR calculated?',
-            a: 'Mean Time To Resolution is calculated from incident creation to resolution, averaged across all incidents in the selected timeframe.',
-          },
-        ].map((faq, index) => (
-          <div key={index} className="p-4 rounded-lg bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
-            <div className="font-semibold text-slate-900 dark:text-white text-sm mb-2">Q: {faq.q}</div>
-            <div className="text-sm text-slate-600 dark:text-slate-400"><strong>A:</strong> {faq.a}</div>
-          </div>
-        ))}
+        <div className="p-4 rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
+          <p className="text-sm text-blue-900 dark:text-blue-100 m-0">
+            <strong>📝 Document Everything:</strong> Add investigation notes as you troubleshoot. Future you 
+            (and your team) will thank you when writing the post-mortem.
+          </p>
+        </div>
+        <div className="p-4 rounded-lg bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800">
+          <p className="text-sm text-purple-900 dark:text-purple-100 m-0">
+            <strong>⚡ Acknowledge Quickly:</strong> Acknowledge incidents immediately when you start working 
+            on them to stop alert spam and signal to others that it's being handled.
+          </p>
+        </div>
+        <div className="p-4 rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800">
+          <p className="text-sm text-green-900 dark:text-green-100 m-0">
+            <strong>🔍 Review Patterns:</strong> Regularly review incident history to identify recurring 
+            issues and proactively address root causes.
+          </p>
+        </div>
       </div>
 
     </div>
