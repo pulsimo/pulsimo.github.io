@@ -2,144 +2,105 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { ChevronRight, BookOpen, Rocket, Settings, Code, Database, Bell, Activity, Users, Shield, GitBranch, FileText, HelpCircle } from 'lucide-react'
+import { useEffect, useRef } from 'react'
+import { BookOpen, Github, Search } from 'lucide-react'
+import { DOC_SECTIONS, docHref } from '@/lib/docs/manifest'
+import { GITHUB_URL } from '@/components/Navigation'
+import { cn } from '@/lib/utils'
 
-const navigation = [
-  {
-    title: 'Getting Started',
-    icon: Rocket,
-    items: [
-      { title: 'Overview', href: '/docs' },
-      { title: 'Installation', href: '/docs/installation' },
-      { title: 'Quick Start', href: '/docs/quick-start' },
-      { title: 'First Project Setup', href: '/docs/first-project' },
-    ]
-  },
-  {
-    title: 'Core Concepts',
-    icon: BookOpen,
-    items: [
-      { title: 'Architecture', href: '/docs/architecture' },
-      { title: 'Projects & Organization', href: '/docs/projects' },
-      { title: 'Health Checks', href: '/docs/health-checks' },
-      { title: 'Real-time Monitoring', href: '/docs/monitoring' },
-    ]
-  },
-  {
-    title: 'Features',
-    icon: Activity,
-    items: [
-      { title: 'Service Dashboard', href: '/docs/features/dashboard' },
-      { title: 'Performance Analytics', href: '/docs/features/performance' },
-      { title: 'Incident Management', href: '/docs/features/incidents' },
-      { title: 'Dependencies', href: '/docs/features/dependencies' },
-      { title: 'Notifications & Alerts', href: '/docs/features/alerts' },
-      { title: 'Database Health', href: '/docs/features/database' },
-      { title: 'Event Trail', href: '/docs/features/events' },
-    ]
-  },
-  {
-    title: 'Configuration',
-    icon: Settings,
-    items: [
-      { title: 'Environment Variables', href: '/docs/config/environment' },
-      { title: 'Docker Setup', href: '/docs/config/docker' },
-      { title: 'SMTP & Email', href: '/docs/config/smtp' },
-      { title: 'Database Config', href: '/docs/config/database' },
-    ]
-  },
-  {
-    title: 'User Management',
-    icon: Users,
-    items: [
-      { title: 'Roles & Permissions', href: '/docs/users/roles' },
-      { title: 'User Management', href: '/docs/users/management' },
-      { title: 'API Keys', href: '/docs/users/api-keys' },
-    ]
-  },
-  {
-    title: 'API Reference',
-    icon: Code,
-    items: [
-      { title: 'Authentication', href: '/docs/api/auth' },
-      { title: 'Endpoints API', href: '/docs/api/endpoints' },
-      { title: 'Incidents API', href: '/docs/api/incidents' },
-      { title: 'Webhooks', href: '/docs/api/webhooks' },
-    ]
-  },
-  {
-    title: 'Guides',
-    icon: FileText,
-    items: [
-      { title: 'Best Practices', href: '/docs/guides/best-practices' },
-      { title: 'Production Deployment', href: '/docs/guides/production' },
-      { title: 'Troubleshooting', href: '/docs/guides/troubleshooting' },
-    ]
-  },
-  {
-    title: 'Resources',
-    icon: HelpCircle,
-    items: [
-      { title: 'FAQ', href: '/docs/faq' },
-      { title: 'GitHub', href: 'https://github.com/Cloud-Council/pulsimo', external: true },
-    ]
-  },
-]
+export function openDocsSearch() {
+  window.dispatchEvent(new Event('docs-search:open'))
+}
 
-export default function DocsSidebar() {
-  const pathname = usePathname()
+function normalize(path: string) {
+  return path.endsWith('/') ? path : `${path}/`
+}
+
+export function SearchButton({ className }: { className?: string }) {
+  return (
+    <button
+      type="button"
+      onClick={openDocsSearch}
+      className={cn(
+        'group flex w-full items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2 text-left text-sm text-slate-500 transition hover:border-slate-300 hover:text-slate-700 dark:border-white/10 dark:bg-white/[0.03] dark:text-slate-400 dark:hover:border-white/20 dark:hover:text-slate-200',
+        className,
+      )}
+    >
+      <Search className="h-4 w-4" />
+      <span className="flex-1">Search docs</span>
+      <kbd className="hidden rounded border border-slate-200 px-1.5 font-mono text-[10px] text-slate-400 dark:border-white/10 sm:inline">Ctrl K</kbd>
+    </button>
+  )
+}
+
+export function DocsNavList({ onNavigate }: { onNavigate?: () => void }) {
+  const pathname = normalize(usePathname() ?? '/docs/')
+  const listRef = useRef<HTMLDivElement>(null)
+
+  // Keep the current page in view when the sidebar is taller than the screen.
+  useEffect(() => {
+    const active = listRef.current?.querySelector<HTMLElement>('[aria-current="page"]')
+    const scroller = listRef.current?.closest<HTMLElement>('nav')
+    if (!active || !scroller) return
+    const a = active.getBoundingClientRect()
+    const s = scroller.getBoundingClientRect()
+    if (a.top < s.top || a.bottom > s.bottom) scroller.scrollTop += a.top - s.top - s.height / 3
+  }, [pathname])
+
+  const linkClass = (active: boolean) =>
+    cn(
+      'relative block rounded-md py-1.5 pl-3 pr-2 text-[13.5px] leading-snug transition-colors',
+      active
+        ? 'bg-violet-500/10 font-medium text-violet-700 before:absolute before:inset-y-1.5 before:left-0 before:w-0.5 before:rounded-full before:bg-violet-500 dark:bg-violet-500/[0.12] dark:text-violet-300 dark:before:bg-violet-400 dark:before:shadow-[0_0_10px_rgba(167,139,250,0.9)]'
+        : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-white/[0.04] dark:hover:text-white',
+    )
 
   return (
-    <aside className="w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 h-[calc(100vh-4rem)] overflow-y-auto sticky top-16">
-      <div className="p-4">
-        <div className="mb-6">
-          <h2 className="text-sm font-bold text-slate-900 dark:text-white mb-2 px-2">Documentation</h2>
+    <div ref={listRef} className="space-y-6">
+      <Link href="/docs/" onClick={onNavigate} aria-current={pathname === '/docs/' ? 'page' : undefined} className={cn(linkClass(pathname === '/docs/'), 'flex items-center gap-2')}>
+        <BookOpen className="h-4 w-4" /> Overview
+      </Link>
+      {DOC_SECTIONS.map((section) => (
+        <div key={section.title}>
+          <p className="mb-1.5 px-3 font-mono text-[10.5px] font-semibold uppercase tracking-[0.16em] text-slate-400 dark:text-slate-500">
+            {section.title}
+          </p>
+          <ul className="space-y-0.5">
+            {section.items.map((item) => {
+              const href = docHref(item.slug)
+              const active = pathname === href
+              return (
+                <li key={item.slug}>
+                  <Link href={href} onClick={onNavigate} aria-current={active ? 'page' : undefined} className={linkClass(active)}>
+                    {item.title}
+                  </Link>
+                </li>
+              )
+            })}
+          </ul>
         </div>
-        
-        <nav className="space-y-6">
-          {navigation.map((section) => (
-            <div key={section.title}>
-              <div className="flex items-center gap-2 px-2 mb-2">
-                <section.icon className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
-                <h3 className="text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider">
-                  {section.title}
-                </h3>
-              </div>
-              <ul className="space-y-1">
-                {section.items.map((item) => {
-                  const isActive = pathname === item.href
-                  return (
-                    <li key={item.href}>
-                      {item.external ? (
-                        <a
-                          href={item.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-2 px-2 py-1.5 text-sm rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400"
-                        >
-                          {item.title}
-                          <ChevronRight className="w-3 h-3 -rotate-45" />
-                        </a>
-                      ) : (
-                        <Link
-                          href={item.href}
-                          className={`block px-2 py-1.5 text-sm rounded-md transition-colors ${
-                            isActive
-                              ? 'bg-cyan-50 dark:bg-cyan-900/20 text-cyan-600 dark:text-cyan-400 font-medium'
-                              : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
-                          }`}
-                        >
-                          {item.title}
-                        </Link>
-                      )}
-                    </li>
-                  )
-                })}
-              </ul>
-            </div>
-          ))}
-        </nav>
+      ))}
+      <a
+        href={GITHUB_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center gap-2 px-3 text-[13.5px] text-slate-500 transition hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
+      >
+        <Github className="h-4 w-4" /> GitHub
+      </a>
+    </div>
+  )
+}
+
+export default function DocsSidebar() {
+  return (
+    <aside className="sticky top-16 hidden h-[calc(100vh-4rem)] w-64 shrink-0 flex-col border-r border-slate-200 dark:border-white/[0.06] lg:flex">
+      <div className="px-4 pb-3 pt-6">
+        <SearchButton />
       </div>
+      <nav aria-label="Documentation" className="docs-scroll flex-1 overflow-y-auto px-3 pb-10 pt-2">
+        <DocsNavList />
+      </nav>
     </aside>
   )
 }

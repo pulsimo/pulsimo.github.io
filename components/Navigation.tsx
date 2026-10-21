@@ -1,112 +1,153 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Github } from 'lucide-react'
-import { motion } from 'framer-motion'
+import { ArrowRight, Github, Menu, X } from 'lucide-react'
+import Logo from '@/components/Logo'
+import ThemeToggle from '@/components/ThemeToggle'
+import { cn } from '@/lib/utils'
+
+export const GITHUB_URL = 'https://github.com/Cloud-Council/pulsimo'
 
 const navLinks = [
-  { href: '/', label: 'Home' },
-  { href: '/about', label: 'Dev' },
+  { href: '/', label: 'Product' },
   { href: '/docs', label: 'Docs' },
+  { href: '/about', label: 'Developers' },
   { href: '/contact', label: 'Contact' },
 ]
 
+// With trailingSlash: true the exported pages report paths like "/docs/"
+function isActive(pathname: string, href: string) {
+  const path = pathname.replace(/\/+$/, '') || '/'
+  return href === '/' ? path === '/' : path === href || path.startsWith(`${href}/`)
+}
+
 export default function Navigation() {
-  const pathname = usePathname()
+  const pathname = usePathname() ?? '/'
+  const [open, setOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  // Close the mobile menu after navigating
+  useEffect(() => setOpen(false), [pathname])
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-40 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
-      <div className="relative flex items-center h-16">
-        {/* Logo - Aligned with sidebar Documentation text (24px from left) */}
-        <div className="absolute left-6">
-          <Link href="/" className="flex items-center gap-2 group">
-            <div className="text-3xl md:text-4xl font-bold">
-              <span className="bg-gradient-to-r from-[#1e40af] via-[#0891b2] to-[#14b8a6] dark:from-[#3b82f6] dark:via-[#06b6d4] dark:to-[#14b8a6] bg-clip-text text-transparent">
-                Pulsimo
-              </span>
-            </div>
-            <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-gradient-to-r from-orange-400 to-pink-500 text-white">
-              BETA
-            </span>
-          </Link>
-        </div>
+    <header
+      className={cn(
+        'fixed inset-x-0 top-0 z-50 border-b transition-colors duration-300',
+        scrolled || open
+          ? 'border-slate-200/80 bg-white/80 backdrop-blur-xl dark:border-white/[0.08] dark:bg-black/70'
+          : 'border-transparent bg-transparent'
+      )}
+    >
+      <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8" aria-label="Main">
+        <Link href="/" className="shrink-0" aria-label="Pulsimo home">
+          <Logo />
+        </Link>
 
-        {/* Navigation Links - Absolute Center */}
-        <div className="hidden md:flex items-center gap-6 lg:gap-8 absolute left-1/2 -translate-x-1/2">
+        <ul className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 md:flex">
           {navLinks.map((link) => {
-            const isActive = pathname === link.href
+            const active = isActive(pathname, link.href)
             return (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`relative text-sm font-medium transition-colors whitespace-nowrap ${
-                  isActive
-                    ? 'text-cyan-600 dark:text-cyan-400'
-                    : 'text-slate-700 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-400'
-                }`}
-              >
-                {link.label}
-                {isActive && (
-                  <motion.div
-                    layoutId="nav-indicator"
-                    className="absolute -bottom-[21px] left-0 right-0 h-0.5 bg-gradient-to-r from-cyan-500 to-blue-500"
-                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                  />
-                )}
-              </Link>
-            )
-          })}
-        </div>
-
-        {/* GitHub Icon - Next to theme toggle */}
-        <a
-          href="https://github.com/Cloud-Council/pulsimo"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="hidden md:block fixed top-4 right-16 z-50 p-2 rounded-full bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200 dark:border-slate-700 hover:bg-white dark:hover:bg-slate-800 shadow-lg transition-colors"
-          aria-label="View on GitHub"
-        >
-          <Github className="w-5 h-5 text-slate-700 dark:text-slate-300" />
-        </a>
-
-        {/* Mobile Menu Button */}
-        <div className="md:hidden ml-auto mr-4">
-          <a
-            href="https://github.com/Cloud-Council/pulsimo"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
-            aria-label="View on GitHub"
-          >
-            <Github className="w-5 h-5 text-slate-700 dark:text-slate-300" />
-          </a>
-        </div>
-      </div>
-
-      {/* Mobile Navigation */}
-      <div className="md:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
-        <div className="container mx-auto px-4 py-3">
-          <div className="flex flex-col gap-2">
-            {navLinks.map((link) => {
-              const isActive = pathname === link.href
-              return (
+              <li key={link.href}>
                 <Link
-                  key={link.href}
                   href={link.href}
-                  className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                    isActive
-                      ? 'bg-cyan-50 dark:bg-cyan-900/20 text-cyan-600 dark:text-cyan-400'
-                      : 'text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800'
-                  }`}
+                  aria-current={active ? 'page' : undefined}
+                  className={cn(
+                    'relative py-5 text-sm font-medium transition-colors',
+                    active
+                      ? 'text-slate-900 dark:text-white'
+                      : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
+                  )}
                 >
                   {link.label}
+                  {active && (
+                    <span className="absolute inset-x-0 -bottom-px h-0.5 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500" />
+                  )}
                 </Link>
+              </li>
+            )
+          })}
+        </ul>
+
+        <div className="flex items-center gap-2">
+          <a
+            href={GITHUB_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Pulsimo on GitHub"
+            className="hidden h-9 w-9 items-center justify-center rounded-full text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-white/10 dark:hover:text-white sm:inline-flex"
+          >
+            <Github className="h-[18px] w-[18px]" />
+          </a>
+          <ThemeToggle />
+          <Link
+            href="/docs/quick-start"
+            className="ml-1 hidden items-center gap-1.5 rounded-full bg-violet-600 px-4 py-2 text-sm font-semibold text-white shadow-[0_0_24px_-4px_rgba(124,58,237,0.7)] ring-1 ring-inset ring-white/20 transition hover:bg-violet-500 sm:inline-flex"
+          >
+            Get started
+          </Link>
+          <button
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            className="inline-flex h-9 w-9 items-center justify-center rounded-full text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-white/10 md:hidden"
+            aria-label={open ? 'Close menu' : 'Open menu'}
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+          >
+            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </div>
+      </nav>
+
+      {open && (
+        <div id="mobile-menu" className="border-t border-slate-200/80 px-4 pb-4 pt-2 dark:border-white/[0.08] md:hidden">
+          <ul className="flex flex-col gap-1">
+            {navLinks.map((link) => {
+              const active = isActive(pathname, link.href)
+              return (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    aria-current={active ? 'page' : undefined}
+                    className={cn(
+                      'block rounded-lg px-3 py-2.5 text-base font-medium',
+                      active
+                        ? 'bg-slate-100 text-slate-900 dark:bg-white/10 dark:text-white'
+                        : 'text-slate-600 hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-white/5'
+                    )}
+                  >
+                    {link.label}
+                  </Link>
+                </li>
               )
             })}
+          </ul>
+          <div className="mt-3 flex gap-2">
+            <Link
+              href="/docs/quick-start"
+              className="flex flex-1 items-center justify-center gap-1.5 rounded-full bg-violet-600 px-4 py-2.5 text-sm font-semibold text-white"
+            >
+              Get started <ArrowRight className="h-4 w-4" />
+            </Link>
+            <a
+              href={GITHUB_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 rounded-full border border-slate-200 px-4 py-2.5 text-sm font-medium text-slate-700 dark:border-white/10 dark:text-slate-200"
+            >
+              <Github className="h-4 w-4" /> GitHub
+            </a>
           </div>
         </div>
-      </div>
-    </nav>
+      )}
+    </header>
   )
 }

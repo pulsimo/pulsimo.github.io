@@ -1,39 +1,10 @@
 # Dashboard Images for Pulsimo Landing Page
 
-## 📁 Required Images
+The home page slider (`components/sections/DashboardShowcase.tsx`) shows the
+screenshots in `day/` in light mode and the ones in `night/` in dark mode.
 
-Place your dashboard screenshots in this directory with the following names:
+To add or replace a screenshot, put it in `day/` and/or `night/` and list it in
+`dashboardSlides` in that component with its title and description. A slide with
+only one of the two images is shown only in that theme.
 
-1. **dashboard-1.png** - Service Dashboard
-   - Main service monitoring view with project cards
-
-2. **dashboard-2.png** - Service Performance Analytics
-   - Performance metrics and uptime tracking
-
-3. **dashboard-3.png** - Notification Channels (modal view)
-   - Alert configuration interface
-
-4. **dashboard-4.png** - Notification Channels (main view)
-   - Multi-channel alert management
-
-5. **dashboard-5.png** - System Health Monitoring
-   - Real-time service health indicators
-
-6. **dashboard-6.png** - Database Health
-   - Database maintenance and performance
-
-7. **dashboard-7.png** - Event Trail
-   - Activity logging and event tracking
-
-## 📏 Image Specifications
-
-- **Format**: PNG (preferred) or WebP
-- **Dimensions**: 1920x1080px or higher (16:9 aspect ratio)
-- **File Size**: Optimized, preferably < 500KB per image
-- **Theme**: Dark mode screenshots preferred
-
-## 🚀 After Adding Images
-
-The slider will automatically display your images. No code changes needed!
-
-Just refresh the browser at http://localhost:3001
+Screenshots are currently 1914x1033 PNGs (about 200-470 KB each).

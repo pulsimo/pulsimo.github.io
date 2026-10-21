@@ -1,308 +1,163 @@
 'use client'
 
+import { useState } from 'react'
+import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { ArrowRight, Activity, Shield, Zap, Sparkles, TrendingUp, Lock } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { Activity, ArrowRight, BellRing, LayoutDashboard, Play, ScrollText, ShipWheel } from 'lucide-react'
+import DashboardMockup from '@/components/sections/DashboardMockup'
+
+// The glow takes one breath every 3s (see the breathe/spread/flare keyframes in globals.css)
+// and moves to the next color at the bottom of each breath.
+const GLOW_COLORS = ['#8b5cf6', '#06b6d4', '#3b82f6', '#10b981', '#d946ef', '#6366f1']
+
+const highlights = [
+  { icon: Activity, title: 'Real-time metrics', text: 'See what matters, instantly' },
+  { icon: ScrollText, title: 'Log aggregation', text: 'Find issues faster' },
+  { icon: BellRing, title: 'Smart alerts', text: 'Stay ahead, always' },
+  { icon: ShipWheel, title: 'Kubernetes monitoring', text: 'From nodes to pods' },
+  { icon: LayoutDashboard, title: 'Powerful dashboards', text: 'Visualize. Analyze. Resolve.' },
+]
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, delay: 0.1 + i * 0.1, ease: [0.22, 1, 0.36, 1] },
+  }),
+}
 
 export default function Hero() {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.2,
-      },
-    },
-  }
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: [0.6, 0.05, 0.01, 0.9],
-      },
-    },
-  }
-
-  const glowVariants = {
-    animate: {
-      scale: [1, 1.2, 1],
-      opacity: [0.5, 0.8, 0.5],
-      transition: {
-        duration: 4,
-        repeat: Infinity,
-        ease: 'easeInOut',
-      },
-    },
-  }
+  const [colorIndex, setColorIndex] = useState(0)
+  const nextColor = () => setColorIndex((i) => (i + 1) % GLOW_COLORS.length)
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white dark:bg-black">
-      {/* Dark Mode Glowing Effect - Blue Radiation */}
-      <div className="absolute inset-0 dark:block hidden">
-        <motion.div
-          variants={glowVariants}
-          animate="animate"
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-600 rounded-full blur-[120px] opacity-20"
-        />
-        <motion.div
-          variants={glowVariants}
-          animate="animate"
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500 rounded-full blur-[100px] opacity-30"
-          style={{ animationDelay: '1s' }}
-        />
-        <motion.div
-          variants={glowVariants}
-          animate="animate"
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-indigo-600 rounded-full blur-[80px] opacity-25"
-          style={{ animationDelay: '2s' }}
+    <section
+      className="glow-scope relative isolate overflow-hidden bg-white pt-32 dark:bg-black sm:pt-36"
+      style={{ '--glow': GLOW_COLORS[colorIndex] } as React.CSSProperties}
+    >
+      {/* Ambient wash: the current color spreads across the whole hero, then recedes */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 opacity-50 dark:opacity-100">
+        <div
+          className="animate-spread absolute inset-x-[-25%] top-[10%] h-[120%] origin-[50%_55%]"
+          style={{
+            background:
+              'radial-gradient(ellipse 60% 50% at 50% 58%, color-mix(in srgb, var(--glow) 42%, transparent), transparent 75%)',
+          }}
+          onAnimationIteration={nextColor}
         />
       </div>
+      {/* Fade into the next section */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-64 bg-gradient-to-b from-transparent to-white dark:to-black" />
+      <div aria-hidden="true" className="bg-dot-grid pointer-events-none absolute inset-0 -z-10 [mask-image:linear-gradient(to_bottom,black,transparent_70%)]" />
 
-      {/* Light Mode Subtle Grid Pattern */}
-      <div className="absolute inset-0 dark:hidden block opacity-[0.02]">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `radial-gradient(circle at 1px 1px, rgb(0 0 0 / 0.15) 1px, transparent 0)`,
-          backgroundSize: '40px 40px'
-        }}></div>
-      </div>
-
-      {/* Floating Orbs for Light Mode */}
-      <div className="absolute inset-0 dark:hidden block">
-        <motion.div
-          animate={{
-            y: [0, -30, 0],
-            x: [0, 20, 0],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-          className="absolute top-20 right-20 w-32 h-32 bg-gradient-to-br from-cyan-200 to-blue-300 rounded-full blur-2xl opacity-40"
-        />
-        <motion.div
-          animate={{
-            y: [0, 40, 0],
-            x: [0, -30, 0],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-          className="absolute bottom-32 left-20 w-40 h-40 bg-gradient-to-br from-indigo-200 to-purple-300 rounded-full blur-2xl opacity-30"
-        />
-      </div>
-
-      <div className="container relative z-10 px-4 md:px-6 py-20 pb-32">
-        <motion.div
-          className="flex flex-col items-center text-center"
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          {/* Pulsimo Brand with Glowing Effect */}
-          <motion.div variants={itemVariants} className="relative mb-6">
-            <div className="absolute -top-3 -right-10 md:-right-16">
-              <motion.span
-                animate={{
-                  scale: [1, 1.05, 1],
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                }}
-                className="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-bold bg-gradient-to-r from-orange-500 via-pink-500 to-rose-500 text-white shadow-lg shadow-pink-500/50"
-              >
-                BETA
-              </motion.span>
-            </div>
-            
-            <div className="relative">
-              {/* Glow effect behind text */}
-              <div className="absolute inset-0 blur-3xl opacity-40 dark:opacity-60">
-                <h2 className="text-7xl md:text-8xl lg:text-9xl font-black tracking-tight">
-                  <span className="bg-gradient-to-r from-yellow-400 via-amber-500 to-orange-500 bg-clip-text text-transparent">
-                    Pulsimo
-                  </span>
-                </h2>
-              </div>
-              
-              {/* Main text */}
-              <h2 className="relative text-7xl md:text-8xl lg:text-9xl font-black tracking-tight">
-                <span className="bg-gradient-to-r from-yellow-500 via-amber-400 to-yellow-500 dark:from-yellow-300 dark:via-amber-200 dark:to-yellow-300 bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(251,191,36,0.5)]">
-                  Pulsimo
-                </span>
-              </h2>
-            </div>
-          </motion.div>
-
-          {/* Badge with Icon */}
-          <motion.div variants={itemVariants} className="mb-8">
-            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-cyan-50 to-blue-50 dark:from-cyan-500/10 dark:to-blue-500/10 border-2 border-cyan-200 dark:border-cyan-500/30 backdrop-blur-sm shadow-lg shadow-cyan-500/10">
-              <Sparkles className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
-              <span className="text-sm font-bold bg-gradient-to-r from-cyan-700 to-blue-700 dark:from-cyan-200 dark:to-blue-200 bg-clip-text text-transparent">
-                Real-time Monitoring Platform
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="relative z-10 mx-auto max-w-5xl text-center">
+          <motion.div variants={fadeUp} initial="hidden" animate="visible" custom={0}>
+            <span className="inline-flex items-center gap-2.5 rounded-full border border-slate-200 bg-white/70 px-4 py-1.5 font-mono text-[11px] font-semibold uppercase tracking-[0.25em] text-slate-700 backdrop-blur dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
               </span>
-            </div>
+              Real-time observability
+            </span>
           </motion.div>
 
-          {/* Main Heading with Better Typography */}
           <motion.h1
-            variants={itemVariants}
-            className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight max-w-5xl mb-6 leading-[1.1]"
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            custom={1}
+            className="mt-7 text-[2.75rem] font-bold leading-[1.05] tracking-tight text-slate-900 dark:text-white sm:text-6xl lg:text-[5.25rem]"
           >
-            <span className="text-slate-900 dark:text-white">Monitor Your Systems with</span>
-            <br />
-            <span className="bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 dark:from-cyan-400 dark:via-blue-400 dark:to-indigo-400 bg-clip-text text-transparent">
-              Precision & Power
+            Know what&apos;s happening.
+            <span className="block bg-gradient-to-r from-violet-600 via-indigo-500 to-cyan-500 bg-clip-text pb-2 text-transparent dark:from-violet-400 dark:via-indigo-400 dark:to-cyan-400">
+              Before it breaks.
             </span>
           </motion.h1>
 
-          {/* Subheading with Better Spacing */}
           <motion.p
-            variants={itemVariants}
-            className="text-xl md:text-2xl text-slate-600 dark:text-slate-300 max-w-3xl leading-relaxed mb-10 font-medium"
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            custom={2}
+            className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-slate-600 dark:text-slate-300"
           >
-            Stay ahead of issues before they impact your users. Get real-time insights into your 
-            application's health, performance, and security.
+            Endpoints, infrastructure, Kubernetes, metrics and logs, all connected in one clear view. Self-hosted, open
+            source and ready in minutes.
           </motion.p>
 
-          {/* CTA Buttons - Redesigned */}
           <motion.div
-            variants={itemVariants}
-            className="flex flex-col sm:flex-row gap-4 mb-12"
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            custom={3}
+            className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row"
           >
+            <Link
+              href="/docs"
+              className="group inline-flex items-center gap-2 rounded-full bg-violet-600 px-6 py-3 text-sm font-semibold text-white shadow-[0_0_40px_-6px_rgba(124,58,237,0.8)] ring-1 ring-inset ring-white/20 transition hover:bg-violet-500"
+            >
+              Explore Pulsimo
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+            </Link>
             <a
-              href="https://github.com/Cloud-Council/pulsimo"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="#showcase"
+              className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white/60 px-6 py-3 text-sm font-semibold text-slate-800 backdrop-blur transition hover:border-slate-400 hover:bg-white dark:border-white/15 dark:bg-white/[0.03] dark:text-white dark:hover:border-white/30 dark:hover:bg-white/[0.06]"
             >
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Button
-                  size="lg"
-                  className="group px-8 py-6 text-lg font-bold bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white shadow-xl shadow-cyan-500/50 dark:shadow-cyan-500/30 rounded-xl"
-                >
-                  Get Started Free
-                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </Button>
-              </motion.div>
+              <Play className="h-3.5 w-3.5 fill-current" />
+              View live demo
             </a>
-            
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Button
-                size="lg"
-                className="px-8 py-6 text-lg font-bold bg-white dark:bg-slate-800 text-slate-900 dark:text-white border-2 border-slate-300 dark:border-slate-600 hover:border-slate-400 dark:hover:border-slate-500 hover:shadow-xl rounded-xl"
-              >
-                View Demo
-              </Button>
-            </motion.div>
           </motion.div>
+        </div>
 
-          {/* Feature Cards - Completely Redesigned */}
-          <motion.div
-            variants={itemVariants}
-            className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-4xl"
-          >
-            <motion.div
-              whileHover={{ y: -5, scale: 1.02 }}
-              className="group p-6 rounded-2xl bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-cyan-500/10 dark:to-blue-500/10 border-2 border-cyan-200 dark:border-cyan-500/20 hover:border-cyan-400 dark:hover:border-cyan-400/40 hover:shadow-2xl hover:shadow-cyan-500/20 transition-all duration-300"
-            >
-              <div className="flex flex-col items-center text-center">
-                <div className="mb-4 p-3 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 text-white shadow-lg group-hover:scale-110 transition-transform duration-300">
-                  <Lock className="w-6 h-6" />
-                </div>
-                <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
-                  Enterprise Security
-                </h3>
-                <p className="text-sm text-slate-600 dark:text-slate-400">
-                  Bank-grade encryption
-                </p>
-              </div>
-            </motion.div>
-
-            <motion.div
-              whileHover={{ y: -5, scale: 1.02 }}
-              className="group p-6 rounded-2xl bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-500/10 dark:to-indigo-500/10 border-2 border-blue-200 dark:border-blue-500/20 hover:border-blue-400 dark:hover:border-blue-400/40 hover:shadow-2xl hover:shadow-blue-500/20 transition-all duration-300"
-            >
-              <div className="flex flex-col items-center text-center">
-                <div className="mb-4 p-3 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-lg group-hover:scale-110 transition-transform duration-300">
-                  <Zap className="w-6 h-6" />
-                </div>
-                <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
-                  Lightning Fast
-                </h3>
-                <p className="text-sm text-slate-600 dark:text-slate-400">
-                  Sub-second response time
-                </p>
-              </div>
-            </motion.div>
-
-            <motion.div
-              whileHover={{ y: -5, scale: 1.02 }}
-              className="group p-6 rounded-2xl bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-500/10 dark:to-purple-500/10 border-2 border-indigo-200 dark:border-indigo-500/20 hover:border-indigo-400 dark:hover:border-indigo-400/40 hover:shadow-2xl hover:shadow-indigo-500/20 transition-all duration-300"
-            >
-              <div className="flex flex-col items-center text-center">
-                <div className="mb-4 p-3 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white shadow-lg group-hover:scale-110 transition-transform duration-300">
-                  <TrendingUp className="w-6 h-6" />
-                </div>
-                <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
-                  Real-time Analytics
-                </h3>
-                <p className="text-sm text-slate-600 dark:text-slate-400">
-                  Live performance metrics
-                </p>
-              </div>
-            </motion.div>
-          </motion.div>
-
-        </motion.div>
-        
-        {/* Scroll Indicator - Modernized */}
+        {/* Horizon + dashboard */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5, duration: 0.6 }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20"
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          className="relative mt-20 sm:mt-28"
         >
-          <motion.div
-            animate={{
-              y: [0, 12, 0],
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
-            className="flex flex-col items-center gap-3"
-          >
-            <span className="text-sm font-semibold text-slate-500 dark:text-slate-400">Scroll to explore</span>
-            <div className="w-6 h-10 rounded-full border-2 border-slate-300 dark:border-slate-600 flex items-start justify-center p-2">
-              <motion.div
-                animate={{
-                  y: [0, 12, 0],
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: 'easeInOut',
-                }}
-                className="w-1.5 h-1.5 rounded-full bg-gradient-to-b from-cyan-600 to-blue-600 dark:from-cyan-400 dark:to-blue-400"
-              />
-            </div>
-          </motion.div>
+          <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 -top-28 -z-10 h-[900px]">
+            {/* Planet edge rising behind the dashboard */}
+            <div
+              className="animate-breathe absolute left-1/2 top-0 aspect-square w-[min(1300px,180vw)] rounded-full bg-white [mask-image:linear-gradient(to_bottom,black_0%,black_30%,transparent_55%)] dark:bg-black"
+              style={{
+                boxShadow:
+                  '0 -2px 0 0 color-mix(in srgb, var(--glow) 55%, white), 0 -10px 40px -4px var(--glow), 0 -40px 120px -10px color-mix(in srgb, var(--glow) 70%, transparent), inset 0 6px 24px -10px color-mix(in srgb, var(--glow) 80%, white)',
+              }}
+            />
+            {/* Bright flare at the top of the horizon */}
+            <div
+              className="animate-flare absolute left-1/2 top-0 h-48 w-[min(760px,95vw)] rounded-[100%] blur-2xl"
+              style={{ background: 'radial-gradient(closest-side, color-mix(in srgb, var(--glow) 60%, white), color-mix(in srgb, var(--glow) 70%, transparent) 40%, transparent)' }}
+            />
+            <div
+              className="animate-flare absolute left-1/2 top-0 h-10 w-[min(460px,70vw)] rounded-[100%] bg-white blur-xl dark:opacity-90"
+            />
+            <span className="animate-blink absolute left-[18%] top-24 h-1 w-1 rounded-full bg-violet-400 shadow-[0_0_12px_2px] shadow-violet-400" />
+            <span className="animate-blink absolute right-[20%] top-36 h-1 w-1 rounded-full bg-cyan-300 shadow-[0_0_12px_2px] shadow-cyan-300 [animation-delay:1s]" />
+          </div>
+
+          <div className="relative mx-auto max-w-6xl">
+            <DashboardMockup />
+          </div>
         </motion.div>
+
+        {/* Capability strip */}
+        <ul className="mx-auto grid max-w-6xl grid-cols-2 gap-x-4 gap-y-6 py-14 sm:grid-cols-3 lg:grid-cols-5 lg:divide-x lg:divide-slate-200 dark:lg:divide-white/10">
+          {highlights.map(({ icon: Icon, title, text }) => (
+            <li key={title} className="flex items-center gap-3 lg:justify-center lg:px-4">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-violet-200 bg-violet-50 text-violet-600 dark:border-violet-500/20 dark:bg-violet-500/10 dark:text-violet-300">
+                <Icon className="h-[18px] w-[18px]" />
+              </span>
+              <span>
+                <span className="block text-sm font-semibold text-slate-900 dark:text-white">{title}</span>
+                <span className="block text-xs text-slate-500 dark:text-slate-400">{text}</span>
+              </span>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   )
