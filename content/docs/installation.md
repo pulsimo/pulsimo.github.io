@@ -38,13 +38,17 @@ commands.
 ## Install with the setup script
 
 The script checks Docker and the machine's resources, detects the server's IP address,
-writes `.env` with freshly generated secrets, starts every service and waits until the web
-app and the API answer.
+writes `.env` with a generated database password and JWT secret, starts every service and
+waits until the web app and the API answer.
 
 ```bash
 chmod +x setup-prod.sh
 ./setup-prod.sh
 ```
+
+The script does not generate `METRICS_SECRET_KEY`. When it pauses with "Press Enter to
+continue with deployment", open `.env` in another terminal and replace that placeholder
+with the output of `openssl rand -base64 32`, then press Enter.
 
 When it finishes, open `http://<server-ip>:3000` and continue with
 [First sign-in](#first-sign-in).
@@ -93,9 +97,11 @@ When it finishes, open `http://<server-ip>:3000` and continue with
 ## First sign-in
 
 1. Open `http://<HOST_IP>:3000`.
-2. Click **Register** and create your organization. The first account is its
-   administrator.
-3. Add someone else as an administrator too (Users → Add user), so you are never locked
+2. Sign in as `superadmin@pulsimo.io` with the password `admin`. The database
+   migrations create this administrator on every new install.
+3. Change that password straight away: **Users** → **Reset password** on your own row.
+   There is no sign-up page; everyone else is added from **Users**.
+4. Add someone else as an administrator too (Users → Add user), so you are never locked
    out of user management. See [Users and access](/docs/users/roles/).
 
 Then follow the [Quick start](/docs/quick-start/) to add your first endpoint and alert

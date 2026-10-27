@@ -7,8 +7,16 @@ to it. Pulsimo must already be running; if not, start with
 
 ## 1. Sign in
 
-Open `http://<HOST_IP>:3000`, click **Register** and create your organization and the
-first administrator. Every later account is added by an administrator from **Users**.
+Open `http://<HOST_IP>:3000` and sign in with the administrator account every new install
+starts with:
+
+| Email | Password |
+|---|---|
+| `superadmin@pulsimo.io` | `admin` |
+
+Change that password straight away: open **Users** and click **Reset password** on your own
+row. There is no sign-up page, so every other account is added by an administrator from
+**Users**. To give the organization your own name, open **Settings → Organization**.
 
 ## 2. Add an alert channel
 

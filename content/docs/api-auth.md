@@ -57,8 +57,9 @@ changes, locks or *Sign everyone out*.
 
 ## Creating an organization
 
-`POST /api/v1/auth/register` creates an organization and its first administrator. It is
-what the **Register** page calls:
+`POST /api/v1/auth/register` creates an organization and its first administrator. The web
+app has no sign-up page in this release (a new install starts with the
+`superadmin@pulsimo.io` administrator instead), but the API route is still there:
 
 ```json
 {
