@@ -102,15 +102,18 @@ Pulsimo also ships as a Helm chart, published on Docker Hub and listed on
 [Artifact Hub](https://artifacthub.io/packages/helm/pulsimo/pulsimo). It installs the same services as the Compose file:
 
 ```bash
-helm install pulsimo oci://registry-1.docker.io/pulsimo/pulsimo --version 0.1.0 -n pulsimo --create-namespace
+#to get the chart version run
+helm search hub pulsimo
+# install with later chart verison
+helm install pulsimo oci://registry-1.docker.io/pulsimo/pulsimo --version <chart_verison> -n pulsimo --create-namespace
 kubectl -n pulsimo get pods -w
 ```
 
 To see every setting the chart takes, and how to expose it with an Ingress:
 
 ```bash
-helm show values oci://registry-1.docker.io/pulsimo/pulsimo --version 0.1.0
-helm show readme oci://registry-1.docker.io/pulsimo/pulsimo --version 0.1.0
+helm show values oci://registry-1.docker.io/pulsimo/pulsimo --version <chart_verison> 
+helm show readme oci://registry-1.docker.io/pulsimo/pulsimo --version <chart_verison> 
 ```
 
 Remove it with `helm uninstall pulsimo -n pulsimo`.
