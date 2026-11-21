@@ -105,7 +105,7 @@ Pulsimo also ships as a Helm chart, published on Docker Hub and listed on
 #to get the chart version run
 helm search hub pulsimo
 # install with later chart verison
-helm install pulsimo oci://registry-1.docker.io/pulsimo/pulsimo --version <chart_verison> -n pulsimo --create-namespace
+helm install pulsimo oci://registry-1.docker.io/pulsimo/pulsimo --version <chart_verison> -n pulsimo --create-namespace --set postgresql.appArmorProfile.type=Unconfined
 kubectl -n pulsimo get pods -w
 ```
 
