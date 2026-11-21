@@ -21,7 +21,7 @@ export const DOC_SECTIONS: DocSection[] = [
   {
     title: 'Get started',
     items: [
-      { slug: 'installation', file: 'installation.md', title: 'Installation', description: 'Run Pulsimo on your own server with Docker Compose, from published images or from source.' },
+      { slug: 'installation', file: 'installation.md', title: 'Installation', description: 'Run Pulsimo on your own server with Docker Compose, or on Kubernetes with the Helm chart.' },
       { slug: 'quick-start', file: 'quick-start.md', title: 'Quick start', description: 'From an empty install to your first endpoint, alert channel and metric source in about ten minutes.' },
       { slug: 'first-project', file: 'first-project.md', title: 'Your first project', description: 'Group endpoints into a project, set a reliability target and see it on the status board.' },
       { slug: 'architecture', file: 'architecture.md', title: 'Architecture', description: 'The services that make up Pulsimo, where data lives and how a check becomes an alert.' },

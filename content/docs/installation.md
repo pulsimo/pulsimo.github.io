@@ -4,6 +4,8 @@ Pulsimo runs on your own server with Docker Compose. Everything it needs, includ
 PostgreSQL, Redis, VictoriaMetrics and VictoriaLogs, starts in the same Compose project,
 so one Linux machine is enough to get going.
 
+Running Kubernetes? Skip to [Install on Kubernetes with Helm](#install-on-kubernetes-with-helm).
+
 ## Requirements
 
 | | Minimum | Recommended for production |
@@ -93,6 +95,25 @@ When it finishes, open `http://<server-ip>:3000` and continue with
    docker compose -f docker-compose.prod.yml ps
    curl -s http://localhost:8080/health
    ```
+
+## Install on Kubernetes with Helm
+
+Pulsimo also ships as a Helm chart, published on Docker Hub and listed on
+[Artifact Hub](https://artifacthub.io/packages/helm/pulsimo/pulsimo). It installs the same services as the Compose file:
+
+```bash
+helm install pulsimo oci://registry-1.docker.io/pulsimo/pulsimo --version 0.1.0 -n pulsimo --create-namespace
+kubectl -n pulsimo get pods -w
+```
+
+To see every setting the chart takes, and how to expose it with an Ingress:
+
+```bash
+helm show values oci://registry-1.docker.io/pulsimo/pulsimo --version 0.1.0
+helm show readme oci://registry-1.docker.io/pulsimo/pulsimo --version 0.1.0
+```
+
+Remove it with `helm uninstall pulsimo -n pulsimo`.
 
 ## First sign-in
 
